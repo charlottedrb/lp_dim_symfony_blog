@@ -1,6 +1,4 @@
----
-tags: symfony, lp-dim
----
+(second repo car trop de bugs sur le premier) 
 
 # Réponses TP 3 
 

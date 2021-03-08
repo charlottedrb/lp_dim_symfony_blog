@@ -1,22 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
 
 {% block body %}
-    <h3>Last Articles</h3>
+    <h1>{{ post.title }}</h1>
+    <p class="text-muted">─ Écrit le {{ post.createdAt|date("D. d F Y") }} par {{ post.author }}</p>
+
+    <div class="content">
+        <p>{{ post.content }}</p>
+    </div>
     <hr>
-    {% for post in posts %}
-        <a href="{{ path("post_show", {'id': post.id}) }}" class="custom-card">
-            <div class="card">
-                <div class="card-body">
-                    {{ post.content }}
-                    <div class="text-muted">
-                        ─ {{ post.author }} | {{ post.createdAt|date('Y-m-d') }}
-                    </div>
-                </div>
+
+    {% include 'comment/new.html.twig' %}
+
+    <div class="bg-light mt-3 p-4">
+        <h3 class="mb-3">Commentaires</h3>
+        {% for comment in comments %}
+            <div class="bg-white p-3">
+                <span class="fw-bold">{{ comment.author }} ─ </span> {{ comment.content }} <span class="text-muted">le {{ comment.createdAt|date("d/m/Y à H:i") }}</span>
             </div>
-        </a>
-    {% endfor %}
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {% block sidebar %}

@@ -18,3 +18,13 @@ header:before {
 header .blog-title{
     z-index: 0;
 }
+
+a.custom-card {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+a.custom-card:hover{
+    color: deeppink;
+}

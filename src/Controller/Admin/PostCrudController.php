@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class PostCrudController extends AbstractCrudController
 {
@@ -21,6 +22,7 @@ class PostCrudController extends AbstractCrudController
     {
         return [
             AssociationField::new('author'),
+            TextField::new('title'),
             TextareaField::new('content'),
             DateField::new('createdAt'),
             BooleanField::new('isPublished'),

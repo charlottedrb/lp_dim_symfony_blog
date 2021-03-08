@@ -28,3 +28,12 @@ a.custom-card {
 a.custom-card:hover{
     color: deeppink;
 }
+
+.text-pink{
+    color: deeppink;
+}
+
+.btn-pink{
+    color: white;
+    background-color: deeppink;
+}

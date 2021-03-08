@@ -1,20 +1,68 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PostController!{% endblock %}
+{% block title %}Posts{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="d-flex justify-content-between mb-3">
+        <h3>All posts</h3>
+        <a class="btn btn-pink" id="addButton">Add</a>
+    </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="bg-light p-3 d-none mb-3" id="addForm">
+        {% include 'post/new.html.twig' %}
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/charlottederbaghdassarian/Documents/lp-dim/php-symfony/tp_blog/src/Controller/PostController.php'|file_link(0) }}">src/Controller/PostController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/charlottederbaghdassarian/Documents/lp-dim/php-symfony/tp_blog/templates/post/index.html.twig'|file_link(0) }}">templates/post/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="row">
+        {% for post in posts %}
+            <div class="col-md-4">
+                <a href="{{ path("post_show", {'id': post.id}) }}" class="custom-card">
+                    <div class="card">
+                        <div class="card-body">
+                            {{ post.content }}
+                            <div class="text-muted">
+                                ─ {{ post.author }} | {{ post.createdAt|date('Y-m-d') }}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+    <div class="row mb-3">
+        <div>Charlotte</div>
+    </div>
+    <div class="row">
+        <h3>Top Articles</h3>
+        <hr>
+        {% for post in posts %}
+            <a href="{{ path("post_show", {'id': post.id}) }}" class="custom-card">
+                <div class="card">
+                    <div class="card-body">
+                        {{ post.content }}
+                        <div class="text-muted">
+                            ─ {{ post.author }} | {{ post.createdAt|date('Y-m-d') }}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.querySelector('#addButton').addEventListener('click', () => {
+            const form = document.querySelector('#addForm');
+            if(form.classList.contains('d-none')){
+                form.classList.remove('d-none');
+                form.classList.add('d-block');
+            } else {
+                form.classList.add('d-none');
+                form.classList.remove('d-block');
+            }
+        })
+    </script>
 {% endblock %}

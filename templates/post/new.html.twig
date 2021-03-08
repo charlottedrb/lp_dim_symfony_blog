@@ -1,0 +1,11 @@
+{{ form_start(form) }}
+<div class="form-group">
+    {{ form_label(form.title, 'Title', {'label_attr': {'class': 'form-label text-pink'}}) }}
+    {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Post title..'}}) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.content, 'Content', {'label_attr': {'class': 'form-label text-pink'}}) }}
+    {{ form_widget(form.content, {'attr': {'class': 'form-control', 'placeholder': 'Post content..'}}) }}
+</div>
+    {{ form_widget(form.save, {'attr': {'class': 'btn btn-dark mt-2' }}) }}
+{{ form_end(form) }}

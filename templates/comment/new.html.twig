@@ -1,7 +1,7 @@
 {{ form_start(form) }}
 <div class="form-group">
-    {{ form_label(form.content, 'Ajouter un commentaire', {'label_attr': {'class': 'form-label'}}) }}
-    {{ form_widget(form.content, {'attr': {'class': 'form-control', 'placeholder': 'Votre commentaire..'}}) }}
+    {{ form_label(form.content, 'Add a comment', {'label_attr': {'class': 'form-label text-pink'}}) }}
+    {{ form_widget(form.content, {'attr': {'class': 'form-control', 'placeholder': 'Your comment..'}}) }}
 </div>
     {{ form_widget(form.save, {'attr': {'class': 'btn btn-dark mt-2' }}) }}
 {{ form_end(form) }}

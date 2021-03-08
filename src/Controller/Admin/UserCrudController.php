@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\PasswordField;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -20,6 +21,7 @@ class UserCrudController extends AbstractCrudController
     {
         return [
             TextField::new('username'),
+            TextField::new('password'),
             BooleanField::new('isActive'),
             BooleanField::new('isBlocked'),
         ];

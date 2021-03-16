@@ -14,6 +14,7 @@
         {{ message }}
     </div>
 {% endfor %}
+
 <div class="col-md-8">
     <div class="row justify-content-between">
         <div class="col-8">
@@ -21,7 +22,7 @@
         </div>
             <div class="col-4 text-end align-self-center">
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a class="btn btn-dark" href="{{ path('post_edit', {'id': post.id}) }}">Unpublished</a>
+                    <a class="btn btn-dark" href="{{ path('post_unpublish', {'id': post.id}) }}">Unpublish</a>
                 {% endif %}
 
                 {% if is_granted('edit', post) or is_granted('ROLE_ADMIN') %}
@@ -48,7 +49,9 @@
                 </div>
                 <span>
 {#                    <a href="{{ path('comment_edit', {'id': comment.id}) }}"><i class="fas fa-pen text-pink"></i></a>#}
-                    <a href="{{ path('comment_delete', {'id': comment.id}) }}"><i class="fas fa-trash text-dark"></i></a>
+                    {% if is_granted('delete', comment) or is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('comment_delete', {'id': comment.id}) }}"><i class="fas fa-trash text-dark"></i></a>
+                    {% endif %}
                 </span>
             </div>
         {% endfor %}

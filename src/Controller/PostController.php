@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Comment;
 use App\Entity\Post;
-use App\Entity\User;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
@@ -15,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class PostController extends AbstractController
 {
@@ -95,5 +92,18 @@ class PostController extends AbstractController
             'posts' => $posts,
             'form' => $commentForm->createView(),
         ]);
+    }
+
+    #[Route('/post/unpublish/{id}', name: 'post_unpublish')]
+    public function unpublish(PostRepository $postRepository, UserRepository $userRepository, $id): Response
+    {
+        $post = $postRepository->findOneBy(['id' => $id]);
+
+        $this->getDoctrine()->getManager()->remove($post);
+        $this->getDoctrine()->getManager()->flush();
+
+        $this->addFlash('unpublish_success', 'Post has been succesfully unpublish.');
+
+        return $this->redirectToRoute('post');
     }
 }

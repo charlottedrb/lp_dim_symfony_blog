@@ -62,7 +62,6 @@ class PostController extends AbstractController
     {
         $posts = $postRepository->findAll();
         $post = $postRepository->findOneBy(['id' => $id]);
-        $user = $userRepository->findOneBy(['username' => 'charlottedrb']);
         $comments = $commentRepository->findByPost($id);
 
         $commentForm = $this->createFormBuilder()
@@ -75,7 +74,26 @@ class PostController extends AbstractController
             'post' => $post,
             'posts' => $posts,
             'form' => $commentForm->createView(),
-            'comments' => $comments
+            'comments' => $comments,
+        ]);
+    }
+
+    #[Route('/post/edit/{id}', name: 'post_edit')]
+    public function edit(PostRepository $postRepository, UserRepository $userRepository, $id): Response
+    {
+        $posts = $postRepository->findAll();
+        $post = $postRepository->findOneBy(['id' => $id]);
+
+        $commentForm = $this->createFormBuilder()
+            ->setAction($this->generateUrl('comment_new', ['postId' => $id]))
+            ->add('content', TextareaType::class)
+            ->add('save', SubmitType::class)
+            ->getForm();
+
+        return $this->render('post/edit.html.twig', [
+            'post' => $post,
+            'posts' => $posts,
+            'form' => $commentForm->createView(),
         ]);
     }
 }

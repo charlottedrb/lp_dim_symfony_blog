@@ -6,7 +6,9 @@
 <div class="col-md-8">
     <div class="d-flex justify-content-between mb-3">
         <h3>All posts</h3>
-        <a class="btn btn-pink" id="addButton">Add</a>
+        {% if is_granted('ROLE_AUTHOR') %}
+            <a class="btn btn-pink" id="addButton">Add</a>
+        {% endif %}
     </div>
 
     <div class="bg-light p-3 d-none mb-3" id="addForm">
@@ -45,7 +47,7 @@
                 <a href="{{ path("post_show", {'id': post.id}) }}" class="custom-card">
                     <div class="card">
                         <div class="card-body">
-                            {{ post.content }}
+                            {{ post.title }}
                             <div class="text-muted">
                                 ─ {{ post.author }} | {{ post.createdAt|date('Y-m-d') }}
                             </div>

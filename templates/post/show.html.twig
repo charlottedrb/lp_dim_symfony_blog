@@ -4,7 +4,15 @@
 
 {% block body %}
 <div class="col-md-8">
-    <h1>{{ post.title }}</h1>
+    <div class="row justify-content-between">
+        <div class="col-10">
+            <h1>{{ post.title }}</h1>
+        </div>
+        <div class="col-2 text-end align-self-center">
+            <a class="btn btn-pink" href="{{ path('post_edit', {'id': post.id}) }}">Edit</a>
+        </div>
+
+    </div>
     <p class="text-muted">─ Écrit le {{ post.createdAt|date("D. d F Y") }} par {{ post.author }}</p>
 
     <div class="content">

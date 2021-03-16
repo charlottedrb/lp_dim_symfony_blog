@@ -3,14 +3,31 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block body %}
+{% for message in app.flashes('delete_success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes('error') %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+{% endfor %}
 <div class="col-md-8">
     <div class="row justify-content-between">
-        <div class="col-10">
+        <div class="col-8">
             <h1>{{ post.title }}</h1>
         </div>
-        <div class="col-2 text-end align-self-center">
-            <a class="btn btn-pink" href="{{ path('post_edit', {'id': post.id}) }}">Edit</a>
-        </div>
+            <div class="col-4 text-end align-self-center">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="btn btn-dark" href="{{ path('post_edit', {'id': post.id}) }}">Unpublished</a>
+                {% endif %}
+
+                {% if is_granted('edit', post) or is_granted('ROLE_ADMIN') %}
+                    <a class="btn btn-pink" href="{{ path('post_edit', {'id': post.id}) }}">Edit</a>
+                {% endif %}
+            </div>
 
     </div>
     <p class="text-muted">─ Écrit le {{ post.createdAt|date("D. d F Y") }} par {{ post.author }}</p>
@@ -25,8 +42,14 @@
     <div class="bg-light mt-3 p-4">
         <h3 class="mb-3">Commentaires</h3>
         {% for comment in comments %}
-            <div class="bg-white p-3">
-                <span class="fw-bold">{{ comment.author }} ─ </span> {{ comment.content }} <span class="text-muted">le {{ comment.createdAt|date("d/m/Y à H:i") }}</span>
+            <div class="bg-white d-flex justify-content-between p-3">
+                <div>
+                    <span class="fw-bold">{{ comment.author }} ─ </span> {{ comment.content }} <span class="text-muted">le {{ comment.createdAt|date("d/m/Y à H:i") }}</span>
+                </div>
+                <span>
+{#                    <a href="{{ path('comment_edit', {'id': comment.id}) }}"><i class="fas fa-pen text-pink"></i></a>#}
+                    <a href="{{ path('comment_delete', {'id': comment.id}) }}"><i class="fas fa-trash text-dark"></i></a>
+                </span>
             </div>
         {% endfor %}
     </div>

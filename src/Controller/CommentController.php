@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\User;
+use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -46,24 +47,35 @@ class CommentController extends AbstractController
 
         return $this->redirectToRoute('post_show', ['id' => $postId, 'error' => "Votre commentaire n'a pas pu être publié."]);
     }
+
+    /*#[Route('/comment/edit/{id}', name: 'comment_edit')]
+    public function edit(Request $request, $id, CommentRepository $commentRepository): Response
+    {
+        if($request->isMethod('POST')) {
+            $this->addFlash('edit_success', 'Your comment has been edited.');
+            $comment = $commentRepository->findOneBy(['id' => $id]);
+
+            $this->getDoctrine()->getManager()->remove($comment);
+            $this->getDoctrine()->getManager()->flush();
+        } else {
+            $this->addFlash('error', 'An error occurred please try again.');
+        }
+        return $this->redirect($request->headers->get('referer'));
+    }*/
+
+    #[Route('/comment/delete/{id}', name: 'comment_delete')]
+    public function delete(Request $request, $id, CommentRepository $commentRepository): Response
+    {
+        try{
+
+            $this->addFlash('delete_success', 'Your comment has been deleted.');
+            $comment = $commentRepository->findOneBy(['id' => $id]);
+
+            $this->getDoctrine()->getManager()->remove($comment);
+            $this->getDoctrine()->getManager()->flush();
+        } catch(\Exception) {
+            $this->addFlash('error', 'An error occurred please try again.');
+        }
+        return $this->redirect($request->headers->get('referer'));
+    }
 }
-
-/*$form = $this->createFormBuilder()
-    ->add('content', TextareaType::class)
-    ->add('save', SubmitType::class)
-    ->getForm();
-
-$user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => 'charlottedrb']);
-$post = $this->getDoctrine()->getRepository(Post::class)->findOneBy(['id' => $postId]);
-
-$form->submit();
-if($form->isSubmitted() && $form->isValid()){
-    $data =
-    dd($data);
-    $comment = new Comment();
-    $comment->setAuthor($user);
-    $comment->setPost($post);
-    $comment->setContent($data);
-    $this->getDoctrine()->getManager()->persist();
-    $this->getDoctrine()->getManager()->flush();
-}*/

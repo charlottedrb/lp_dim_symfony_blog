@@ -3,6 +3,9 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
+    {% for flashError in app.flashes('email_verified') %}
+        <div class="alert alert-success" role="alert">{{ flashError }}</div>
+    {% endfor %}
 <div class="col-md-8">
     <h3>Last Articles</h3>
     <hr>
@@ -24,7 +27,8 @@
 {% block sidebar %}
     <div class="col-md-4 bg-light p-3">
         <div class="row mb-3">
-            <div>Charlotte</div>
+            <div class="col-9">{{ app.user.username }}</div>
+            <a class="col-3 btn btn-dark" href="{{ path('app_logout') }}">Logout</a>
         </div>
         <div class="row">
             <h3>Top Articles</h3>

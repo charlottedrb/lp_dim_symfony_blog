@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Authentication;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
@@ -40,6 +40,8 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $user->setIsActive(1);
+            $user->setIsBlocked(0);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -83,8 +85,8 @@ class RegistrationController extends AbstractController
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Votre adresse e-mail a bien été vérifiée.');
+        $this->addFlash('email_verified', 'Your email address has been verified. Welcome !');
 
-        return $this->redirectToRoute('login');
+        return $this->redirectToRoute('home');
     }
 }

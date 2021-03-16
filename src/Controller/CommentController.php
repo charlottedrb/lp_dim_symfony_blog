@@ -29,7 +29,7 @@ class CommentController extends AbstractController
     #[Route('/comment/new/{postId}', name: 'comment_new')]
     public function new(PostRepository $postRepository, UserRepository $userRepository, $postId, Request $request): Response
     {
-        $user = $userRepository->findOneBy(['username' => 'charlottedrb']);
+        $user = $this->getUser();
         $post = $postRepository->findOneBy(['id' => $postId]);
 
         if($request->isMethod('POST')) {

@@ -6,6 +6,7 @@ use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
@@ -58,6 +59,9 @@ class Post
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->createdAt = new \DateTime('NOW');
+        $this->isDeleted = false;
+        $this->isPublished = true;
     }
 
     public function getId(): ?int
@@ -118,7 +122,7 @@ class Post
         return $this->author;
     }
 
-    public function setAuthor(?User $author): self
+    public function setAuthor(?UserInterface $author): self
     {
         $this->author = $author;
 

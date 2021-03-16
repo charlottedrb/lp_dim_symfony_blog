@@ -38,8 +38,6 @@ class CommentController extends AbstractController
             $comment->setAuthor($user);
             $comment->setPost($post);
             $comment->setContent($data['content']);
-            $comment->setCreatedAt(new \DateTime('NOW'));
-            $comment->setIsDeleted(false);
             $this->getDoctrine()->getManager()->persist($comment);
             $this->getDoctrine()->getManager()->flush();
 

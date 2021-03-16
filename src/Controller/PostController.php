@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\User;
-use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
@@ -16,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class PostController extends AbstractController
 {
@@ -38,8 +38,9 @@ class PostController extends AbstractController
     }
 
     #[Route('/post/new', name: 'post_new')]
-    public function new(UserRepository $userRepository, Request $request){
-        $user = $userRepository->findOneBy(['username' => 'charlottedrb']);
+    public function new(Request $request)
+    {
+        $user = $this->getUser();
 
         if($request->isMethod('POST')) {
             $data = $request->get('form');
@@ -47,7 +48,6 @@ class PostController extends AbstractController
             $post->setAuthor($user);
             $post->setTitle($data['title']);
             $post->setContent($data['content']);
-            $post->setCreatedAt(new \DateTime('NOW'));
             $post->setIsDeleted(false);
             $post->setIsPublished(true);
             $this->getDoctrine()->getManager()->persist($post);

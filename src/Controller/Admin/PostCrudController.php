@@ -23,7 +23,7 @@ class PostCrudController extends AbstractCrudController
         return [
             AssociationField::new('author'),
             TextField::new('title'),
-            TextareaField::new('content'),
+            TextEditorField::new('content'),
             DateField::new('createdAt'),
             BooleanField::new('isPublished'),
             BooleanField::new('isDeleted'),
